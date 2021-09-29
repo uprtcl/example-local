@@ -28,22 +28,28 @@ export class App extends servicesConnect(LitElement) {
   async loadNotes() {
     /** explore without input parameters will return all known perspectives/notes */
     const result = await this.evees.explore({});
+    this.notes = new Map();
+
     await Promise.all(
-      result.perspectiveIds.map(async (noteId) => {
+      result.perspectiveIds.reverse().map(async (noteId) => {
         const note = await this.evees.getPerspectiveData<Note>(noteId);
         this.notes.set(noteId, note);
       })
     );
+
+    // re-render
+    this.requestUpdate();
   }
 
   async createNote() {
     const text = this.textearea.value;
-    const noteId = await this.evees.createEvee({ object: { text } });
-    const note = await this.evees.getPerspectiveData<Note>(noteId);
-    this.notes = this.notes.set(noteId, note);
+    await this.evees.createEvee({ object: { text } });
 
     this.textearea.value = '';
     this.textearea.focus();
+
+    await this.evees.flush();
+    await this.loadNotes();
 
     // re-render
     this.requestUpdate();
@@ -55,8 +61,17 @@ export class App extends servicesConnect(LitElement) {
       object: { text },
     });
 
+    await this.evees.flush();
+
     // re-render
     this.requestUpdate();
+  }
+
+  async deleteNote(noteId: string) {
+    await this.evees.deletePerspective(noteId);
+    await this.evees.flush();
+
+    await this.loadNotes();
   }
 
   render() {
@@ -78,6 +93,11 @@ export class App extends servicesConnect(LitElement) {
               ></uprtcl-card>
             </uprtcl-popper>
             <div class="card">${this.notes.get(noteId).object.text}</div>
+            <uprtcl-icon-button
+              icon="clear"
+              button
+              @click=${() => this.deleteNote(noteId)}
+            ></uprtcl-icon-button>
           </div>`
       )}
     </div> `;
@@ -128,6 +148,10 @@ export class App extends servicesConnect(LitElement) {
 
         .evees-info {
           flex-grow: 0;
+          margin: 0px 1vw;
+        }
+
+        uprtcl-icon-button {
           margin: 0px 1vw;
         }
       `,
