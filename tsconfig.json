@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ESNEXT",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "lib": ["es2017", "dom"],
+    "allowJs": true,
+    "checkJs": false,
+    "strict": false,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noImplicitThis": false,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "lit-html": ["node_modules/lit-html"],
+      "lit-html/*": ["node_modules/lit-html/*"]
+    }
+  },
+  "include": ["src", "src/svg.d.ts"],
+  "exclude": ["node_modules"]
+}
