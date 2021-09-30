@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@uprtcl/evees": "0.2.0",
+    "@uprtcl/evees-ui": "0.2.0",
     "lit-element": "^2.2.3"
   },
   "devDependencies": {
