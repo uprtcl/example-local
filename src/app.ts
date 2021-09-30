@@ -66,7 +66,19 @@ export class App extends servicesConnect(LitElement) {
       ><button @click=${() => this.createNote()}>create</button>
       ${Array.from(this.notes.keys()).map(
         (noteId) =>
-          html`<div class="card">${this.notes.get(noteId).object.text}</div>`
+          html`<div class="row">
+            <uprtcl-popper
+              class="evees-info"
+              skinny
+              icon="two_dots"
+              position="right"
+            >
+              <uprtcl-card>
+                <evees-info-debug uref=${noteId}></evees-info-debug
+              ></uprtcl-card>
+            </uprtcl-popper>
+            <div class="card">${this.notes.get(noteId).object.text}</div>
+          </div>`
       )}
     </div> `;
   }
@@ -105,7 +117,18 @@ export class App extends servicesConnect(LitElement) {
           padding: 2vw;
           border: 1px solid;
           border-radius: 5px;
+          flex-grow: 1;
+        }
+
+        .row {
+          display: flex;
+          align-items: center;
           margin-bottom: 2vw;
+        }
+
+        .evees-info {
+          flex-grow: 0;
+          margin: 0px 1vw;
         }
       `,
     ];
