@@ -7,4 +7,4 @@ npm i
 npm run dev
 ```
 
-Then head to http://localhost:8082
+Then head to http://localhost:8002
