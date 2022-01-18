@@ -28,7 +28,7 @@ module.exports = {
   entry: ['babel-polyfill', './src/index.ts'],
   devServer: {
     historyApiFallback: true,
-    port: 8002,
+    port: 8004,
   },
   mode: 'production',
   module: {
